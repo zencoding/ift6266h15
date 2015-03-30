@@ -142,6 +142,10 @@ data_wrapper = CatsnDogs(partsize=100, npy_rng=npy_rng)
 train_parts = data_wrapper.train_generator()
 valid_parts = data_wrapper.valid_generator()
 
+for ipart in data_wrapper.train_generator():
+    pdb.set_trace()
+
+
 try:
     ipart = train_parts.next()
     part_data = ipart[0]
