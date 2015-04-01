@@ -1,3 +1,4 @@
+import sys
 import numpy
 import theano
 import theano.tensor as T
@@ -109,7 +110,7 @@ def Padding(images, padsize=(500, 500, 3), pool=2):
                 -hm : -hm + padsize[0] - hrightmargin, :, :]
 
         output[i] = downscale(template, (pool, pool, 1))
-    output = theano.shared(value=output, name='padedpart', borrow=True)
+    # output = theano.shared(value=output, name='padedpart', borrow=True)
     return output
     """
         A terse but maybe slow implementation:
@@ -137,35 +138,62 @@ def Padding(images, padsize=(500, 500, 3), pool=2):
 #############
 
 npy_rng = numpy.random.RandomState(123)
-data_wrapper = CatsnDogs(partsize=100, npy_rng=npy_rng)
+data_wrapper = CatsnDogs(npy_rng=npy_rng)
 
 train_parts = data_wrapper.train_generator()
 valid_parts = data_wrapper.valid_generator()
 
-for ipart in data_wrapper.train_generator():
-    pdb.set_trace()
-
-
-try:
-    ipart = train_parts.next()
+#################
+# PAD/POOL DATA #
+#################
+"""
+print "pad/pooling data, 10 dots to punch:",
+sys.stdout.flush()
+i = 0
+for ipart in train_parts:
     part_data = ipart[0]
     part_truth = ipart[1]
-
-    #################
-    # PAD/POOL DATA #
-    #################
-    
     paded_part = Padding(part_data)
+    filename = 'train_data_paded_part%d.npz' % i
+    numpy.savez(filename, paded_part=paded_part, part_truth=part_truth)
+    i += 1
+    print ".",
+    sys.stdout.flush()
+"""
+
+#######
+# ZCA #
+#######
+
+class data_generator(object):
+    def __init__(self, string):
+        self.string = string
+        self.partidx = 0
     
-    #######
-    # ZCA #
-    #######
+    def __iter__(self):
+        return self
 
-    pdb.set_trace()
+    def next(self):
+        if self.partidx < 15:
+            filename = self.string + '%d.npz' % self.partidx
+            pdb.set_trace()
+            with numpy.load(filename) as part_data:
+                return part_data['paded_part']
+        else:
+            raise StopIteration
 
-    ##############
-    # STORE FLAG #
-    ##############
+train_dg = data_generator('train_data_paded_part')
+zca_obj = ZCA()
+zca_obj.fit_partwise(train_dg, ncases=25000, ndim=250*250*3, retain=0.99, whiten=True)
 
-except StopIteration:
-    pass
+for i in range(15):
+    filename = 'train_data_paded_part' + '%d.npz' % i
+    writename = 'train_padzca_part' + '%d.npz' % i
+    with numpy.load(filename) as part_data:
+        paded_data = part_data['paded_part']
+        paded_truth = part_data['part_truth']
+        paded_data_shape = paded_data.shape
+        zcaed_data = zca_obj.forward(paded_data.reshape(paded_data_shape[0], -1))
+        numpy.savez(writename, padzca_part=zcaed_data, part_truth=paded_truth)
+
+pdb.set_trace()

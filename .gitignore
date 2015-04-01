@@ -1,9 +1,32 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*.pyc
+
+# numpy files
+*.npy
+*.npz
+
+# pickle files
+*.pkl
+*.pickle
+
+# vim swap files
+*.swp
+*.bak
+
+# gedit backups
+*~
 
 # C extensions
 *.so
+
+# images
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.eps
 
 # Distribution / packaging
 .Python
