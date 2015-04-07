@@ -188,9 +188,44 @@ for epoch in xrange(finetune_epc):
         train_y.set_value(ipart[1])
         i += 1
         cost += trainer.step()
+        
+        # horizontal flip
+        train_x.set_value(ipart[0][:, :, :, ::-1])
         print "       ",
         cost += trainer.step()
-    cost /= i * 2. 
+        
+        # vertical flip
+        train_x.set_value(ipart[0][:, :, ::-1, :])
+        print "       ",
+        cost += trainer.step()
+
+        # 180 rotate
+        train_x.set_value(ipart[0][:, :, ::-1, ::-1])
+        print "       ",
+        cost += trainer.step()
+
+        # right rotate
+        rotate = numpy.swapaxes(ipart[0], 2, 3)
+        train_x.set_value(rotate)
+        print "       ",
+        cost += trainer.step()
+
+        # right rotate filp
+        train_x.set_value(rotate[:, :, ::-1, :])
+        print "       ",
+        cost += trainer.step()
+
+        # left rotate
+        train_x.set_value(rotate[:, :, ::-1, ::-1])
+        print "       ",
+        cost += trainer.step()
+        
+        # left rotate filp
+        train_x.set_value(rotate[:, :, :, ::-1])
+        print "       ",
+        cost += trainer.step()
+
+    cost /= i * 8.
     if prev_cost <= cost:
         if trainer.learningrate < (init_lr * 1e-7):
             break
@@ -200,7 +235,7 @@ for epoch in xrange(finetune_epc):
     print "*** error rate: train: %f, test: %f" % (train_error(), test_error())
     try:
         if epoch % 30 == 0:
-            save_params(model, 'CONV_5-5-3-3_32-48-64-128_3333_512-512-256-128-2.npy')
+            save_params(model, 'CONV_5-5-3-3_32-48-64-128_3333_512-512-256-128-2_dtagmt.npy')
     except:
         pass
 print "***FINAL error rate: train: %f, test: %f" % (train_error(), test_error())
