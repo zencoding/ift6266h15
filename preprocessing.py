@@ -141,11 +141,15 @@ def Padding(images, padsize=(500, 500, 3), pool=2):
 print "... loading data"
 npy_rng = numpy.random.RandomState(123)
 
-"""
 data_wrapper = CatsnDogs(npy_rng=npy_rng)
 train_parts = data_wrapper.train_generator()
 valid_parts = data_wrapper.valid_generator()
-"""
+
+###################
+# SIMPLE RESIZING #
+###################
+
+
 
 #################
 # PAD/POOL DATA #

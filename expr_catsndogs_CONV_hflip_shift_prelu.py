@@ -5,7 +5,7 @@ import theano
 import theano.tensor as T
 from theano.tensor.shared_randomstreams import RandomStreams
 
-from layer import ReluConv2DLayer, MaxPoolingLayer, ReluLayer, LinearLayer
+from layer import PReluConv2DLayer, ReluConv2DLayer, MaxPoolingLayer, PReluLayer, ReluLayer, LinearLayer
 from classifier import LogisticRegression
 from train import GraddescentMinibatch, Dropout
 from params import save_params, load_params, set_params, get_params
@@ -23,10 +23,12 @@ momentum = 0.9
 weightdecay = 0.01
 finetune_lr = 1e-2
 finetune_epc = 400
+noise = 0.2
 
 print " "
 print "batchsize =", batchsize
 print "momentum =", momentum
+print "noise =", noise
 print "finetune:            lr = %f, epc = %d" % (finetune_lr, finetune_epc)
 
 #############
@@ -99,25 +101,25 @@ l3_pool_n_in = (batchsize, l3_filter_shape[0], l3_n_in[2]-l3_filter_shape[2]+1, 
 l3_poolsize = (3, 3)
 
 npy_rng = numpy.random.RandomState(123)
-model = ReluConv2DLayer(
+model = PReluConv2DLayer(
     n_in=l0_n_in, filter_shape=l0_filter_shape, npy_rng=npy_rng
 ) + MaxPoolingLayer(
     n_in=l0_pool_n_in, pool_size=l0_poolsize, ignore_border=True
-) + ReluConv2DLayer(
+) + PReluConv2DLayer(
     n_in=l1_n_in, filter_shape=l1_filter_shape, npy_rng=npy_rng
 ) + MaxPoolingLayer(
     n_in=l1_pool_n_in, pool_size=l1_poolsize, ignore_border=True
-) + ReluConv2DLayer(
+) + PReluConv2DLayer(
     n_in=l2_n_in, filter_shape=l2_filter_shape, npy_rng=npy_rng
 ) + MaxPoolingLayer(
     n_in=l2_pool_n_in, pool_size=l2_poolsize, ignore_border=True
-) + ReluConv2DLayer(
+) + PReluConv2DLayer(
     n_in=l3_n_in, filter_shape=l3_filter_shape, npy_rng=npy_rng
 ) + MaxPoolingLayer(
     n_in=l3_pool_n_in, pool_size=l3_poolsize, ignore_border=True
-) + ReluLayer(512, 512, npy_rng=npy_rng
-) + ReluLayer(512, 256, npy_rng=npy_rng
-) + ReluLayer(256, 128, npy_rng=npy_rng
+) + PReluLayer(512, 512, npy_rng=npy_rng
+) + PReluLayer(512, 256, npy_rng=npy_rng
+) + PReluLayer(256, 128, npy_rng=npy_rng
 ) + LogisticRegression(128, 10, npy_rng=npy_rng)
 
 model.print_layer()
@@ -194,38 +196,25 @@ for epoch in xrange(finetune_epc):
         print "       ",
         cost += trainer.step()
         
-        # vertical flip
-        train_x.set_value(ipart[0][:, :, ::-1, :])
-        print "       ",
-        cost += trainer.step()
+        # shift
+        for shift in range(9):
+            hshift = npy_rng.randint(-5, 5)
+            vshift = npy_rng.randint(-5, 5)
+            tmp_data = numpy.roll(ipart[0], hshift, axis=3)
+            tmp_data = numpy.roll(tmp_data, vshift, axis=2)
+            train_x.set_value(tmp_data)
+            print "       ",
+            cost += trainer.step()
 
-        # 180 rotate
-        train_x.set_value(ipart[0][:, :, ::-1, ::-1])
-        print "       ",
-        cost += trainer.step()
+            hshift = npy_rng.randint(-5, 5)
+            vshift = npy_rng.randint(-5, 5)
+            tmp_data = numpy.roll(ipart[0][:, :, :, ::-1], hshift, axis=3)
+            tmp_data = numpy.roll(tmp_data, vshift, axis=2)
+            train_x.set_value(tmp_data)
+            print "       ",
+            cost += trainer.step()
 
-        # right rotate
-        rotate = numpy.swapaxes(ipart[0], 2, 3)
-        train_x.set_value(rotate)
-        print "       ",
-        cost += trainer.step()
-
-        # right rotate filp
-        train_x.set_value(rotate[:, :, ::-1, :])
-        print "       ",
-        cost += trainer.step()
-
-        # left rotate
-        train_x.set_value(rotate[:, :, ::-1, ::-1])
-        print "       ",
-        cost += trainer.step()
-        
-        # left rotate filp
-        train_x.set_value(rotate[:, :, :, ::-1])
-        print "       ",
-        cost += trainer.step()
-
-    cost /= i * 8.
+    cost /= i * 20.
     if prev_cost <= cost:
         if trainer.learningrate < (init_lr * 1e-7):
             break
@@ -235,7 +224,7 @@ for epoch in xrange(finetune_epc):
     print "*** error rate: train: %f, test: %f" % (train_error(), test_error())
     try:
         if epoch % 30 == 0:
-            save_params(model, 'CONV_5-5-3-3_32-48-64-128_3333_512-512-256-128-10_dtagmt8.npy')
+            save_params(model, 'CONV_5-5-3-3_32-48-64-128_3333_512-512-256-128-10_hflip_shift_lk.npy')
     except:
         pass
 print "***FINAL error rate: train: %f, test: %f" % (train_error(), test_error())

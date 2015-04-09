@@ -23,10 +23,12 @@ momentum = 0.9
 weightdecay = 0.01
 finetune_lr = 1e-2
 finetune_epc = 400
+noise = 0.2
 
 print " "
 print "batchsize =", batchsize
 print "momentum =", momentum
+print "noise =", noise
 print "finetune:            lr = %f, epc = %d" % (finetune_lr, finetune_epc)
 
 #############
@@ -184,46 +186,56 @@ for epoch in xrange(finetune_epc):
     cost = 0.
     for ipart in train_dg:
         print "part %d " % i,
-        train_x.set_value(ipart[0])
+        noise_mask = numpy.tile(npy_rng.binomial(1, 1-noise, (2500, 1, 250, 250)).astype(theano.config.floatX), (1, 3, 1, 1))
+        train_x.set_value(noise_mask * ipart[0])
         train_y.set_value(ipart[1])
         i += 1
         cost += trainer.step()
         
         # horizontal flip
-        train_x.set_value(ipart[0][:, :, :, ::-1])
+        noise_mask = numpy.tile(npy_rng.binomial(1, 1-noise, (2500, 1, 250, 250)).astype(theano.config.floatX), (1, 3, 1, 1))
+        train_x.set_value(noise_mask * ipart[0][:, :, :, ::-1])
         print "       ",
         cost += trainer.step()
         
+        """
         # vertical flip
-        train_x.set_value(ipart[0][:, :, ::-1, :])
+        noise_mask = numpy.tile(npy_rng.binomial(1, 1-noise, (batchsize, 1, 250, 250)), (1, 3, 1, 1))
+        train_x.set_value(noise_mask * ipart[0][:, :, ::-1, :])
         print "       ",
         cost += trainer.step()
 
         # 180 rotate
-        train_x.set_value(ipart[0][:, :, ::-1, ::-1])
+        noise_mask = numpy.tile(npy_rng.binomial(1, 1-noise, (batchsize, 1, 250, 250)), (1, 3, 1, 1))
+        train_x.set_value(noise_mask * ipart[0][:, :, ::-1, ::-1])
         print "       ",
         cost += trainer.step()
 
         # right rotate
+        noise_mask = numpy.tile(npy_rng.binomial(1, 1-noise, (batchsize, 1, 250, 250)), (1, 3, 1, 1))
         rotate = numpy.swapaxes(ipart[0], 2, 3)
-        train_x.set_value(rotate)
+        train_x.set_value(noise_mask * rotate)
         print "       ",
         cost += trainer.step()
 
         # right rotate filp
-        train_x.set_value(rotate[:, :, ::-1, :])
+        noise_mask = numpy.tile(npy_rng.binomial(1, 1-noise, (batchsize, 1, 250, 250)), (1, 3, 1, 1))
+        train_x.set_value(noise_mask * rotate[:, :, ::-1, :])
         print "       ",
         cost += trainer.step()
 
         # left rotate
-        train_x.set_value(rotate[:, :, ::-1, ::-1])
+        noise_mask = numpy.tile(npy_rng.binomial(1, 1-noise, (batchsize, 1, 250, 250)), (1, 3, 1, 1))
+        train_x.set_value(noise_mask * rotate[:, :, ::-1, ::-1])
         print "       ",
         cost += trainer.step()
         
         # left rotate filp
-        train_x.set_value(rotate[:, :, :, ::-1])
+        noise_mask = numpy.tile(npy_rng.binomial(1, 1-noise, (batchsize, 1, 250, 250)), (1, 3, 1, 1))
+        train_x.set_value(noise_mask * rotate[:, :, :, ::-1])
         print "       ",
         cost += trainer.step()
+        """
 
     cost /= i * 8.
     if prev_cost <= cost:
@@ -235,7 +247,7 @@ for epoch in xrange(finetune_epc):
     print "*** error rate: train: %f, test: %f" % (train_error(), test_error())
     try:
         if epoch % 30 == 0:
-            save_params(model, 'CONV_5-5-3-3_32-48-64-128_3333_512-512-256-128-10_dtagmt8.npy')
+            save_params(model, 'CONV_5-5-3-3_32-48-64-128_3333_512-512-256-128-10_dtagmt2_denoise.npy')
     except:
         pass
 print "***FINAL error rate: train: %f, test: %f" % (train_error(), test_error())
