@@ -1,0 +1,618 @@
+[linzhou@bart15 ift6266h15]$ THEANO_FLAGS=device=gpu,floatX=float32 python expr_catsndogs_CONV.py
+Using gpu device 0: Quadro K6000
+ 
+batchsize = 100
+momentum = 0.9
+finetune:            lr = 0.005000, epc = 400
+... preparing data
+Done.
+... building model
+----------------------------------------
+a stacked model with 12 layers:
+----------------------------------------
+ReluConv2DLayer: (100, 3, 250, 250) --> (100, 32, 246, 246)
+                             |
+MaxPoolingLayer: (100, 32, 246, 246) --> (100, 32, 82, 82)
+                             |
+ReluConv2DLayer: (100, 32, 82, 82) --> (100, 48, 78, 78)
+                             |
+MaxPoolingLayer: (100, 48, 78, 78) --> (100, 48, 26, 26)
+                             |
+ReluConv2DLayer: (100, 48, 26, 26) --> (100, 64, 24, 24)
+                             |
+MaxPoolingLayer: (100, 64, 24, 24) --> (100, 64, 8, 8)
+                             |
+ReluConv2DLayer: (100, 64, 8, 8) --> (100, 128, 6, 6)
+                             |
+MaxPoolingLayer: (100, 128, 6, 6) --> (100, 128, 3, 3)
+                             |
+LinearLayer: 1152 --> 300
+                             |
+ReluLayer: 300 --> 1152
+                             |
+LinearLayer: 1152 --> 150
+                             |
+LogisticRegression: 150 --> 10
+-----------------------------------
+Done.
+Initial error rate: train: 0.507400, test: 0.506600
+
+
+... fine-tuning the whole network
+part 0  epoch 1: 12.85s, lr 0.005 cost 0.999819, update norm 1.11 angle(RAD) 1.573
+        epoch 2: 13.61s, lr 0.005 cost 0.74104, update norm 0.367 angle(RAD) 1.592
+part 1  epoch 3: 13.45s, lr 0.005 cost 0.70451, update norm 0.0578 angle(RAD) 1.588
+        epoch 4: 13.60s, lr 0.005 cost 0.705211, update norm 0.0609 angle(RAD) 1.588
+part 2  epoch 5: 13.49s, lr 0.005 cost 0.704867, update norm 0.046 angle(RAD) 1.586
+        epoch 6: 13.60s, lr 0.005 cost 0.72696, update norm 0.129 angle(RAD) 1.587
+part 3  epoch 7: 13.48s, lr 0.005 cost 0.700923, update norm 0.0431 angle(RAD) 1.582
+        epoch 8: 13.60s, lr 0.005 cost 0.715692, update norm 0.0639 angle(RAD) 1.584
+part 4  epoch 9: 13.50s, lr 0.005 cost 0.71491, update norm 0.0782 angle(RAD) 1.581
+        epoch 10: 13.60s, lr 0.005 cost 0.700324, update norm 0.0523 angle(RAD) 1.574
+part 5  epoch 11: 13.52s, lr 0.005 cost 0.701097, update norm 0.0452 angle(RAD) 1.572
+        epoch 12: 13.60s, lr 0.005 cost 0.724335, update norm 0.0702 angle(RAD) 1.579
+part 6  epoch 13: 13.50s, lr 0.005 cost 0.721464, update norm 0.153 angle(RAD) 1.577
+        epoch 14: 13.60s, lr 0.005 cost 0.713025, update norm 0.0996 angle(RAD) 1.573
+part 7  epoch 15: 13.51s, lr 0.005 cost 0.706749, update norm 0.0585 angle(RAD) 1.574
+        epoch 16: 13.61s, lr 0.005 cost 0.697382, update norm 0.036 angle(RAD) 1.566
+*** epoch cost: 0.648795
+***error rate: train: 0.500000, test: 0.500000
+part 0  epoch 17: 13.48s, lr 0.005 cost 0.703324, update norm 0.0323 angle(RAD) 1.573
+        epoch 18: 13.61s, lr 0.005 cost 0.696567, update norm 0.0204 angle(RAD) 1.568
+part 1  epoch 19: 13.45s, lr 0.005 cost 0.695307, update norm 0.0197 angle(RAD) 1.563
+        epoch 20: 13.60s, lr 0.005 cost 0.694518, update norm 0.0317 angle(RAD) 1.565
+part 2  epoch 21: 12.91s, lr 0.005 cost 0.698907, update norm 0.0184 angle(RAD) 1.572
+        epoch 22: 13.53s, lr 0.005 cost 0.697618, update norm 0.0242 angle(RAD) 1.572
+part 3  epoch 23: 13.44s, lr 0.005 cost 0.698578, update norm 0.0161 angle(RAD) 1.575
+        epoch 24: 13.61s, lr 0.005 cost 0.699405, update norm 0.0155 angle(RAD) 1.572
+part 4  epoch 25: 13.46s, lr 0.005 cost 0.698157, update norm 0.01 angle(RAD) 1.566
+        epoch 26: 13.60s, lr 0.005 cost 0.706912, update norm 0.0567 angle(RAD) 1.579
+part 5  epoch 27: 13.45s, lr 0.005 cost 0.699718, update norm 0.0427 angle(RAD) 1.572
+        epoch 28: 13.60s, lr 0.005 cost 0.708738, update norm 0.0494 angle(RAD) 1.576
+part 6  epoch 29: 13.47s, lr 0.005 cost 0.701822, update norm 0.0516 angle(RAD) 1.572
+        epoch 30: 13.60s, lr 0.005 cost 0.698673, update norm 0.0242 angle(RAD) 1.564
+part 7  epoch 31: 13.47s, lr 0.005 cost 0.697988, update norm 0.0193 angle(RAD) 1.566
+        epoch 32: 13.60s, lr 0.005 cost 0.698145, update norm 0.02 angle(RAD) 1.568
+*** epoch cost: 0.621910
+***error rate: train: 0.500000, test: 0.500000
+part 0  epoch 33: 13.49s, lr 0.005 cost 0.700653, update norm 0.0201 angle(RAD) 1.574
+        epoch 34: 13.60s, lr 0.005 cost 0.695344, update norm 0.0167 angle(RAD) 1.565
+part 1  epoch 35: 13.50s, lr 0.005 cost 0.697872, update norm 0.0157 angle(RAD) 1.566
+        epoch 36: 13.60s, lr 0.005 cost 0.694446, update norm 0.0249 angle(RAD) 1.569
+part 2  epoch 37: 13.46s, lr 0.005 cost 0.696074, update norm 0.0255 angle(RAD) 1.571
+        epoch 38: 13.61s, lr 0.005 cost 0.699788, update norm 0.0157 angle(RAD) 1.574
+part 3  epoch 39: 13.47s, lr 0.005 cost 0.695771, update norm 0.0231 angle(RAD) 1.567
+        epoch 40: 13.61s, lr 0.005 cost 0.696211, update norm 0.0184 angle(RAD) 1.568
+part 4  epoch 41: 13.49s, lr 0.005 cost 0.69791, update norm 0.0189 angle(RAD) 1.574
+        epoch 42: 13.60s, lr 0.005 cost 0.698516, update norm 0.0232 angle(RAD) 1.574
+part 5  epoch 43: 13.47s, lr 0.005 cost 0.69907, update norm 0.0342 angle(RAD) 1.571
+        epoch 44: 13.60s, lr 0.005 cost 0.700604, update norm 0.0158 angle(RAD) 1.573
+part 6  epoch 45: 13.46s, lr 0.005 cost 0.700993, update norm 0.0279 angle(RAD) 1.573
+        epoch 46: 13.60s, lr 0.005 cost 0.704292, update norm 0.0567 angle(RAD) 1.574
+part 7  epoch 47: 13.49s, lr 0.005 cost 0.694963, update norm 0.0367 angle(RAD) 1.567
+        epoch 48: 13.60s, lr 0.005 cost 0.697854, update norm 0.0296 angle(RAD) 1.566
+*** epoch cost: 0.620576
+***error rate: train: 0.500000, test: 0.500000
+part 0  epoch 49: 13.49s, lr 0.005 cost 0.700415, update norm 0.0263 angle(RAD) 1.577
+        epoch 50: 13.61s, lr 0.005 cost 0.698416, update norm 0.0231 angle(RAD) 1.574
+part 1  epoch 51: 13.49s, lr 0.005 cost 0.699043, update norm 0.0174 angle(RAD) 1.566
+        epoch 52: 13.60s, lr 0.005 cost 0.70026, update norm 0.0167 angle(RAD) 1.574
+part 2  epoch 53: 13.49s, lr 0.005 cost 0.701366, update norm 0.0221 angle(RAD) 1.573
+        epoch 54: 13.60s, lr 0.005 cost 0.695788, update norm 0.0169 angle(RAD) 1.569
+part 3  epoch 55: 13.49s, lr 0.005 cost 0.695167, update norm 0.0209 angle(RAD) 1.563
+        epoch 56: 13.60s, lr 0.005 cost 0.699494, update norm 0.0343 angle(RAD) 1.572
+part 4  epoch 57: 13.48s, lr 0.005 cost 0.696733, update norm 0.018 angle(RAD) 1.566
+        epoch 58: 13.60s, lr 0.005 cost 0.697816, update norm 0.0421 angle(RAD) 1.571
+part 5  epoch 59: 13.48s, lr 0.005 cost 0.70658, update norm 0.0737 angle(RAD) 1.576
+        epoch 60: 13.60s, lr 0.005 cost 0.697743, update norm 0.032 angle(RAD) 1.570
+part 6  epoch 61: 13.47s, lr 0.005 cost 0.696954, update norm 0.0275 angle(RAD) 1.566
+        epoch 62: 13.60s, lr 0.005 cost 0.702825, update norm 0.0432 angle(RAD) 1.573
+part 7  epoch 63: 13.48s, lr 0.005 cost 0.701178, update norm 0.0541 angle(RAD) 1.574
+        epoch 64: 13.60s, lr 0.005 cost 0.699877, update norm 0.0571 angle(RAD) 1.572
+*** epoch cost: 0.621648
+***error rate: train: 0.500000, test: 0.500000
+part 0  epoch 65: 13.49s, lr 0.004 cost 0.694948, update norm 0.0314 angle(RAD) 1.565
+        epoch 66: 13.60s, lr 0.004 cost 0.693198, update norm 0.03 angle(RAD) 1.563
+part 1  epoch 67: 13.50s, lr 0.004 cost 0.693042, update norm 0.0402 angle(RAD) 1.565
+        epoch 68: 13.60s, lr 0.004 cost 0.689649, update norm 0.0662 angle(RAD) 1.565
+part 2  epoch 69: 13.48s, lr 0.004 cost 0.689519, update norm 0.111 angle(RAD) 1.567
+        epoch 70: 13.60s, lr 0.004 cost 0.666007, update norm 0.128 angle(RAD) 1.566
+part 3  epoch 71: 13.47s, lr 0.004 cost 0.65531, update norm 0.13 angle(RAD) 1.569
+        epoch 72: 13.61s, lr 0.004 cost 0.649157, update norm 0.118 angle(RAD) 1.567
+part 4  epoch 73: 13.48s, lr 0.004 cost 0.664807, update norm 0.122 angle(RAD) 1.571
+        epoch 74: 13.60s, lr 0.004 cost 0.654503, update norm 0.114 angle(RAD) 1.568
+part 5  epoch 75: 13.47s, lr 0.004 cost 0.680256, update norm 0.149 angle(RAD) 1.574
+        epoch 76: 13.59s, lr 0.004 cost 0.667758, update norm 0.178 angle(RAD) 1.573
+part 6  epoch 77: 13.49s, lr 0.004 cost 0.644384, update norm 0.111 angle(RAD) 1.569
+        epoch 78: 13.59s, lr 0.004 cost 0.66091, update norm 0.136 angle(RAD) 1.572
+part 7  epoch 79: 13.47s, lr 0.004 cost 0.639964, update norm 0.103 angle(RAD) 1.568
+        epoch 80: 13.60s, lr 0.004 cost 0.633267, update norm 0.101 angle(RAD) 1.568
+*** epoch cost: 0.593149
+***error rate: train: 0.355800, test: 0.360000
+part 0  epoch 81: 13.51s, lr 0.004 cost 0.632792, update norm 0.0966 angle(RAD) 1.567
+        epoch 82: 13.61s, lr 0.004 cost 0.637773, update norm 0.114 angle(RAD) 1.570
+part 1  epoch 83: 13.47s, lr 0.004 cost 0.632959, update norm 0.119 angle(RAD) 1.570
+        epoch 84: 13.61s, lr 0.004 cost 0.619403, update norm 0.0998 angle(RAD) 1.565
+part 2  epoch 85: 13.50s, lr 0.004 cost 0.63054, update norm 0.113 angle(RAD) 1.570
+        epoch 86: 13.61s, lr 0.004 cost 0.6175, update norm 0.106 angle(RAD) 1.567
+part 3  epoch 87: 13.46s, lr 0.004 cost 0.612654, update norm 0.116 angle(RAD) 1.569
+        epoch 88: 13.60s, lr 0.004 cost 0.608168, update norm 0.104 angle(RAD) 1.570
+part 4  epoch 89: 13.48s, lr 0.004 cost 0.604888, update norm 0.115 angle(RAD) 1.565
+        epoch 90: 13.61s, lr 0.004 cost 0.600706, update norm 0.112 angle(RAD) 1.567
+part 5  epoch 91: 13.48s, lr 0.004 cost 0.591598, update norm 0.111 angle(RAD) 1.565
+        epoch 92: 13.61s, lr 0.004 cost 0.582153, update norm 0.118 angle(RAD) 1.564
+part 6  epoch 93: 13.47s, lr 0.004 cost 0.581134, update norm 0.121 angle(RAD) 1.568
+        epoch 94: 13.61s, lr 0.004 cost 0.585318, update norm 0.133 angle(RAD) 1.567
+part 7  epoch 95: 13.47s, lr 0.004 cost 0.624722, update norm 0.213 angle(RAD) 1.575
+        epoch 96: 13.60s, lr 0.004 cost 0.588152, update norm 0.149 angle(RAD) 1.570
+*** epoch cost: 0.541692
+***error rate: train: 0.307150, test: 0.308800
+part 0  epoch 97: 13.51s, lr 0.004 cost 0.591567, update norm 0.131 angle(RAD) 1.568
+        epoch 98: 13.60s, lr 0.004 cost 0.569388, update norm 0.125 angle(RAD) 1.564
+part 1  epoch 99: 13.47s, lr 0.004 cost 0.599692, update norm 0.129 angle(RAD) 1.571
+        epoch 100: 13.61s, lr 0.004 cost 0.583035, update norm 0.141 angle(RAD) 1.567
+part 2  epoch 101: 13.50s, lr 0.004 cost 0.583925, update norm 0.157 angle(RAD) 1.570
+        epoch 102: 13.61s, lr 0.004 cost 0.575633, update norm 0.116 angle(RAD) 1.566
+part 3  epoch 103: 13.47s, lr 0.004 cost 0.563444, update norm 0.161 angle(RAD) 1.566
+        epoch 104: 13.61s, lr 0.004 cost 0.54946, update norm 0.132 angle(RAD) 1.567
+part 4  epoch 105: 13.46s, lr 0.004 cost 0.550729, update norm 0.142 angle(RAD) 1.565
+        epoch 106: 13.59s, lr 0.004 cost 0.553716, update norm 0.136 angle(RAD) 1.568
+part 5  epoch 107: 13.48s, lr 0.004 cost 0.56817, update norm 0.152 angle(RAD) 1.569
+        epoch 108: 13.60s, lr 0.004 cost 0.550794, update norm 0.119 angle(RAD) 1.566
+part 6  epoch 109: 13.48s, lr 0.004 cost 0.556989, update norm 0.146 angle(RAD) 1.570
+        epoch 110: 13.60s, lr 0.004 cost 0.548772, update norm 0.137 angle(RAD) 1.567
+part 7  epoch 111: 13.48s, lr 0.004 cost 0.576898, update norm 0.136 angle(RAD) 1.570
+        epoch 112: 13.59s, lr 0.004 cost 0.547035, update norm 0.142 angle(RAD) 1.568
+*** epoch cost: 0.503847
+***error rate: train: 0.272150, test: 0.279800
+part 0  epoch 113: 13.49s, lr 0.004 cost 0.558807, update norm 0.138 angle(RAD) 1.568
+        epoch 114: 13.60s, lr 0.004 cost 0.53873, update norm 0.146 angle(RAD) 1.563
+part 1  epoch 115: 13.49s, lr 0.004 cost 0.555488, update norm 0.158 angle(RAD) 1.571
+        epoch 116: 13.61s, lr 0.004 cost 0.533907, update norm 0.151 angle(RAD) 1.566
+^CTraceback (most recent call last):
+  File "expr_catsndogs_CONV.py", line 188, in <module>
+    for epoch in xrange(finetune_epc):
+  File "expr_catsndogs_CONV.py", line 51, in next
+    data = numpy.load(filename)
+  File "/opt/lisa/os/epd-7.1.2/lib/python2.7/site-packages/numpy/lib/npyio.py", line 350, in load
+    return format.read_array(fid)
+  File "/opt/lisa/os/epd-7.1.2/lib/python2.7/site-packages/numpy/lib/format.py", line 453, in read_array
+    array = numpy.fromfile(fp, dtype=dtype, count=count)
+KeyboardInterrupt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+adjust the Relu FC layer initial weights:
+from:
+482             w = numpy.asarray(npy_rng.uniform(
+483                 low = -4 * numpy.sqrt(6. / (n_in + n_out)),
+484                 high = 4 * numpy.sqrt(6. / (n_in + n_out)),
+485                 size=(n_in, n_out)), dtype=theano.config.floatX)
+486             init_w = theano.shared(value=w, name='w_sigmoid', borrow=True)
+to:
+603             w = numpy.asarray(npy_rng.uniform(
+604                 low = -numpy.sqrt(3. / n_in),
+605                 high = numpy.sqrt(3. / n_in),
+606                 size=(n_in, n_out)), dtype=theano.config.floatX)
+607             init_w = theano.shared(value=w, name='w_relu', borrow=True)
+
+[linzhou@bart15 ift6266h15]$ THEANO_FLAGS=device=gpu,floatX=float32 python expr_catsndogs_CONV.py
+Using gpu device 0: Quadro K6000
+ 
+batchsize = 100
+momentum = 0.9
+finetune:            lr = 0.005000, epc = 400
+... preparing data
+Done.
+... building model
+----------------------------------------
+a stacked model with 12 layers:
+----------------------------------------
+ReluConv2DLayer: (100, 3, 250, 250) --> (100, 32, 246, 246)
+                             |
+MaxPoolingLayer: (100, 32, 246, 246) --> (100, 32, 82, 82)
+                             |
+ReluConv2DLayer: (100, 32, 82, 82) --> (100, 48, 78, 78)
+                             |
+MaxPoolingLayer: (100, 48, 78, 78) --> (100, 48, 26, 26)
+                             |
+ReluConv2DLayer: (100, 48, 26, 26) --> (100, 64, 24, 24)
+                             |
+MaxPoolingLayer: (100, 64, 24, 24) --> (100, 64, 8, 8)
+                             |
+ReluConv2DLayer: (100, 64, 8, 8) --> (100, 128, 6, 6)
+                             |
+MaxPoolingLayer: (100, 128, 6, 6) --> (100, 128, 3, 3)
+                             |
+LinearLayer: 1152 --> 300
+                             |
+ReluLayer: 300 --> 1152
+                             |
+LinearLayer: 1152 --> 150
+                             |
+LogisticRegression: 150 --> 10
+-----------------------------------
+> /data/lisatmp3/zlin/ift6266h15/expr_catsndogs_CONV.py(133)<module>()
+-> index = T.lscalar()
+(Pdb) model.models_stack[0].w.get_value().var()
+0.00013613548129796983
+(Pdb) c
+Done.
+Initial error rate: train: 0.507400, test: 0.506600
+
+
+... fine-tuning the whole network
+part 0  epoch 1: 13.25s, lr 0.005 cost 0.955989, update norm 1.24 angle(RAD) 1.566
+        epoch 2: 13.62s, lr 0.005 cost 0.729984, update norm 0.14 angle(RAD) 1.582
+part 1  epoch 3: 13.54s, lr 0.005 cost 0.707564, update norm 0.0803 angle(RAD) 1.609
+        epoch 4: 13.61s, lr 0.005 cost 0.699839, update norm 0.025 angle(RAD) 1.609
+part 2  epoch 5: 13.61s, lr 0.005 cost 0.698341, update norm 0.0351 angle(RAD) 1.604
+        epoch 6: 13.62s, lr 0.005 cost 0.717724, update norm 0.0807 angle(RAD) 1.610
+part 3  epoch 7: 13.62s, lr 0.005 cost 0.69984, update norm 0.0369 angle(RAD) 1.610
+        epoch 8: 13.61s, lr 0.005 cost 0.709942, update norm 0.0479 angle(RAD) 1.606
+part 4  epoch 9: 13.58s, lr 0.005 cost 0.709557, update norm 0.0505 angle(RAD) 1.608
+        epoch 10: 13.61s, lr 0.005 cost 0.698902, update norm 0.0377 angle(RAD) 1.597
+part 5  epoch 11: 13.58s, lr 0.005 cost 0.700039, update norm 0.0292 angle(RAD) 1.599
+        epoch 12: 13.62s, lr 0.005 cost 0.722355, update norm 0.0524 angle(RAD) 1.602
+part 6  epoch 13: 13.56s, lr 0.005 cost 0.716916, update norm 0.0813 angle(RAD) 1.605
+        epoch 14: 13.61s, lr 0.005 cost 0.713699, update norm 0.0615 angle(RAD) 1.596
+part 7  epoch 15: 13.55s, lr 0.005 cost 0.697291, update norm 0.0318 angle(RAD) 1.574
+        epoch 16: 13.60s, lr 0.005 cost 0.700191, update norm 0.0216 angle(RAD) 1.562
+*** epoch 0 cost: 0.643232
+*** error rate: train: 0.500000, test: 0.500000
+part 0  epoch 17: 13.52s, lr 0.005 cost 0.696356, update norm 0.0135 angle(RAD) 1.548
+        epoch 18: 13.62s, lr 0.005 cost 0.69764, update norm 0.0283 angle(RAD) 1.564
+part 1  epoch 19: 13.51s, lr 0.005 cost 0.696904, update norm 0.0103 angle(RAD) 1.551
+        epoch 20: 13.62s, lr 0.005 cost 0.69488, update norm 0.0348 angle(RAD) 1.562
+part 2  epoch 21: 13.50s, lr 0.005 cost 0.698818, update norm 0.0148 angle(RAD) 1.567
+        epoch 22: 13.61s, lr 0.005 cost 0.698589, update norm 0.0251 angle(RAD) 1.568
+part 3  epoch 23: 13.52s, lr 0.005 cost 0.696059, update norm 0.0277 angle(RAD) 1.568
+        epoch 24: 13.62s, lr 0.005 cost 0.69685, update norm 0.0204 angle(RAD) 1.560
+part 4  epoch 25: 13.50s, lr 0.005 cost 0.697648, update norm 0.0139 angle(RAD) 1.554
+        epoch 26: 13.61s, lr 0.005 cost 0.708093, update norm 0.0436 angle(RAD) 1.589
+part 5  epoch 27: 13.51s, lr 0.005 cost 0.697733, update norm 0.0414 angle(RAD) 1.580
+        epoch 28: 13.61s, lr 0.005 cost 0.704587, update norm 0.0229 angle(RAD) 1.583
+part 6  epoch 29: 13.50s, lr 0.005 cost 0.701853, update norm 0.0367 angle(RAD) 1.582
+        epoch 30: 13.61s, lr 0.005 cost 0.696847, update norm 0.0157 angle(RAD) 1.559
+part 7  epoch 31: 13.50s, lr 0.005 cost 0.696209, update norm 0.013 angle(RAD) 1.547
+        epoch 32: 13.61s, lr 0.005 cost 0.697678, update norm 0.0116 angle(RAD) 1.553
+*** epoch 1 cost: 0.620930
+*** error rate: train: 0.500000, test: 0.500000
+part 0  epoch 33: 13.52s, lr 0.005 cost 0.700357, update norm 0.0243 angle(RAD) 1.571
+        epoch 34: 13.61s, lr 0.005 cost 0.694479, update norm 0.00937 angle(RAD) 1.544
+part 1  epoch 35: 13.52s, lr 0.005 cost 0.696208, update norm 0.0124 angle(RAD) 1.545
+        epoch 36: 13.61s, lr 0.005 cost 0.694352, update norm 0.021 angle(RAD) 1.559
+part 2  epoch 37: 13.51s, lr 0.005 cost 0.695126, update norm 0.03 angle(RAD) 1.566
+        epoch 38: 13.61s, lr 0.005 cost 0.699303, update norm 0.0288 angle(RAD) 1.570
+part 3  epoch 39: 13.50s, lr 0.005 cost 0.694624, update norm 0.0282 angle(RAD) 1.559
+        epoch 40: 13.62s, lr 0.005 cost 0.694728, update norm 0.0426 angle(RAD) 1.562
+part 4  epoch 41: 13.52s, lr 0.005 cost 0.693866, update norm 0.0531 angle(RAD) 1.563
+        epoch 42: 13.62s, lr 0.005 cost 0.690044, update norm 0.0938 angle(RAD) 1.561
+part 5  epoch 43: 13.52s, lr 0.005 cost 0.68137, update norm 0.14 angle(RAD) 1.561
+        epoch 44: 13.61s, lr 0.005 cost 0.675929, update norm 0.145 angle(RAD) 1.564
+part 6  epoch 45: 13.51s, lr 0.005 cost 0.666852, update norm 0.127 angle(RAD) 1.564
+        epoch 46: 13.61s, lr 0.005 cost 0.670533, update norm 0.111 angle(RAD) 1.570
+part 7  epoch 47: 13.51s, lr 0.005 cost 0.658904, update norm 0.106 angle(RAD) 1.564
+        epoch 48: 13.61s, lr 0.005 cost 0.638994, update norm 0.0997 angle(RAD) 1.560
+*** epoch 2 cost: 0.608093
+*** error rate: train: 0.366300, test: 0.371800
+part 0  epoch 49: 13.54s, lr 0.005 cost 0.638117, update norm 0.085 angle(RAD) 1.567                                                                                    
+        epoch 50: 13.62s, lr 0.005 cost 0.645702, update norm 0.0847 angle(RAD) 1.566                                                                                   
+part 1  epoch 51: 13.51s, lr 0.005 cost 0.636961, update norm 0.0875 angle(RAD) 1.562                                                                                   
+        epoch 52: 13.61s, lr 0.005 cost 0.631844, update norm 0.0991 angle(RAD) 1.561                                                                                   
+part 2  epoch 53: 13.52s, lr 0.005 cost 0.638329, update norm 0.111 angle(RAD) 1.568                                                                                    
+        epoch 54: 13.61s, lr 0.005 cost 0.653902, update norm 0.13 angle(RAD) 1.572                                                                                     
+part 3  epoch 55: 13.49s, lr 0.005 cost 0.626666, update norm 0.109 angle(RAD) 1.561                                                                                    
+        epoch 56: 13.61s, lr 0.005 cost 0.619774, update norm 0.115 angle(RAD) 1.571                                                                                    
+part 4  epoch 57: 13.52s, lr 0.005 cost 0.62868, update norm 0.116 angle(RAD) 1.558                                                                                     
+        epoch 58: 13.61s, lr 0.005 cost 0.623278, update norm 0.115 angle(RAD) 1.568                                                                                    
+part 5  epoch 59: 13.51s, lr 0.005 cost 0.605402, update norm 0.112 angle(RAD) 1.554                                                                                    
+        epoch 60: 13.61s, lr 0.005 cost 0.606998, update norm 0.125 angle(RAD) 1.555                                                                                    
+part 6  epoch 61: 13.50s, lr 0.005 cost 0.593668, update norm 0.132 angle(RAD) 1.559                                                                                    
+        epoch 62: 13.61s, lr 0.005 cost 0.593817, update norm 0.12 angle(RAD) 1.562                                                                                     
+part 7  epoch 63: 13.50s, lr 0.005 cost 0.600751, update norm 0.141 angle(RAD) 1.567                                                                                    
+        epoch 64: 13.61s, lr 0.005 cost 0.583522, update norm 0.124 angle(RAD) 1.559                                                                                    
+*** epoch 3 cost: 0.551523                                                                                                                                              
+*** error rate: train: 0.310400, test: 0.313400                                                                                                                         
+part 0  epoch 65: 13.51s, lr 0.005 cost 0.592162, update norm 0.139 angle(RAD) 1.565                                                                                    
+        epoch 66: 13.62s, lr 0.005 cost 0.580376, update norm 0.132 angle(RAD) 1.554                                                                                    
+part 1  epoch 67: 13.50s, lr 0.005 cost 0.596654, update norm 0.146 angle(RAD) 1.573                                                                                    
+        epoch 68: 13.61s, lr 0.005 cost 0.586558, update norm 0.141 angle(RAD) 1.561                                                                                    
+part 2  epoch 69: 13.51s, lr 0.005 cost 0.628217, update norm 0.19 angle(RAD) 1.581                                                                                     
+        epoch 70: 13.61s, lr 0.005 cost 0.595652, update norm 0.116 angle(RAD) 1.565                                                                                    
+part 3  epoch 71: 13.48s, lr 0.005 cost 0.567453, update norm 0.143 angle(RAD) 1.555                                                                                    
+        epoch 72: 13.61s, lr 0.005 cost 0.550014, update norm 0.122 angle(RAD) 1.555                                                                                    
+part 4  epoch 73: 13.51s, lr 0.005 cost 0.55588, update norm 0.132 angle(RAD) 1.557                                                                                     
+        epoch 74: 13.62s, lr 0.005 cost 0.549292, update norm 0.129 angle(RAD) 1.556                                                                                    
+part 5  epoch 75: 13.50s, lr 0.005 cost 0.566892, update norm 0.172 angle(RAD) 1.570                                                                                    
+        epoch 76: 13.61s, lr 0.005 cost 0.553643, update norm 0.147 angle(RAD) 1.553                                                                                    
+part 6  epoch 77: 13.49s, lr 0.005 cost 0.558197, update norm 0.136 angle(RAD) 1.564                                                                                    
+        epoch 78: 13.61s, lr 0.005 cost 0.562875, update norm 0.162 angle(RAD) 1.565                                                                                    
+part 7  epoch 79: 13.52s, lr 0.005 cost 0.579807, update norm 0.137 angle(RAD) 1.569                                                                                    
+        epoch 80: 13.61s, lr 0.005 cost 0.56359, update norm 0.135 angle(RAD) 1.567
+*** epoch 4 cost: 0.510403
+*** error rate: train: 0.278450, test: 0.281000
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+do the same for linear layer:
+from:
+524             w = numpy.asarray(npy_rng.uniform(
+525                 low = -numpy.sqrt(6. / (n_in + n_out)),
+526                 high = numpy.sqrt(6. / (n_in + n_out)),
+527                 size=(n_in, n_out)), dtype=theano.config.floatX)
+528             init_w = theano.shared(value=w, name='w_linear', borrow=True)
+to:
+524             w = numpy.asarray(npy_rng.uniform(
+525                 low = -numpy.sqrt(3. / n_in),
+526                 high = numpy.sqrt(3. / n_in),
+527                 size=(n_in, n_out)), dtype=theano.config.floatX)
+528             init_w = theano.shared(value=w, name='w_linear', borrow=True)
+worse:
+[linzhou@bart15 ift6266h15]$ THEANO_FLAGS=device=gpu,floatX=float32 python expr_catsndogs_CONV.py
+Using gpu device 0: Quadro K6000
+ 
+batchsize = 100
+momentum = 0.9
+finetune:            lr = 0.005000, epc = 400
+... preparing data
+Done.
+... building model
+----------------------------------------
+a stacked model with 12 layers:
+----------------------------------------
+ReluConv2DLayer: (100, 3, 250, 250) --> (100, 32, 246, 246)
+                             |
+MaxPoolingLayer: (100, 32, 246, 246) --> (100, 32, 82, 82)
+                             |
+ReluConv2DLayer: (100, 32, 82, 82) --> (100, 48, 78, 78)
+                             |
+MaxPoolingLayer: (100, 48, 78, 78) --> (100, 48, 26, 26)
+                             |
+ReluConv2DLayer: (100, 48, 26, 26) --> (100, 64, 24, 24)
+                             |
+MaxPoolingLayer: (100, 64, 24, 24) --> (100, 64, 8, 8)
+                             |
+ReluConv2DLayer: (100, 64, 8, 8) --> (100, 128, 6, 6)
+                             |
+MaxPoolingLayer: (100, 128, 6, 6) --> (100, 128, 3, 3)
+                             |
+LinearLayer: 1152 --> 300
+                             |
+ReluLayer: 300 --> 1152
+                             |
+LinearLayer: 1152 --> 150
+                             |
+LogisticRegression: 150 --> 10
+-----------------------------------
+> /data/lisatmp3/zlin/ift6266h15/expr_catsndogs_CONV.py(133)<module>()
+-> index = T.lscalar()
+(Pdb) c
+Done.
+Initial error rate: train: 0.507400, test: 0.506600
+
+
+... fine-tuning the whole network
+part 0  epoch 1: 13.29s, lr 0.005 cost 1.00276, update norm 1.25 angle(RAD) 1.565
+        epoch 2: 13.61s, lr 0.005 cost 0.707068, update norm 0.142 angle(RAD) 1.544
+part 1  epoch 3: 13.53s, lr 0.005 cost 0.69777, update norm 0.0328 angle(RAD) 1.598
+        epoch 4: 13.61s, lr 0.005 cost 0.697636, update norm 0.0226 angle(RAD) 1.599
+part 2  epoch 5: 13.60s, lr 0.005 cost 0.698439, update norm 0.0323 angle(RAD) 1.602
+        epoch 6: 13.60s, lr 0.005 cost 0.710439, update norm 0.0706 angle(RAD) 1.603
+part 3  epoch 7: 13.60s, lr 0.005 cost 0.714425, update norm 0.0737 angle(RAD) 1.607
+        epoch 8: 13.60s, lr 0.005 cost 0.69907, update norm 0.0358 angle(RAD) 1.610
+part 4  epoch 9: 13.60s, lr 0.005 cost 0.700614, update norm 0.0192 angle(RAD) 1.606
+        epoch 10: 13.60s, lr 0.005 cost 0.698414, update norm 0.0245 angle(RAD) 1.597
+part 5  epoch 11: 13.60s, lr 0.005 cost 0.698241, update norm 0.0288 angle(RAD) 1.596
+        epoch 12: 13.60s, lr 0.005 cost 0.724567, update norm 0.0508 angle(RAD) 1.608
+part 6  epoch 13: 13.61s, lr 0.005 cost 0.711182, update norm 0.0672 angle(RAD) 1.607
+        epoch 14: 13.60s, lr 0.005 cost 0.708137, update norm 0.0433 angle(RAD) 1.598
+part 7  epoch 15: 13.53s, lr 0.005 cost 0.696016, update norm 0.0347 angle(RAD) 1.574
+        epoch 16: 13.60s, lr 0.005 cost 0.699106, update norm 0.0218 angle(RAD) 1.568
+*** epoch 0 cost: 0.642438
+*** error rate: train: 0.500000, test: 0.500000
+part 0  epoch 17: 13.52s, lr 0.005 cost 0.695958, update norm 0.0134 angle(RAD) 1.556
+        epoch 18: 13.60s, lr 0.005 cost 0.697553, update norm 0.0324 angle(RAD) 1.569
+part 1  epoch 19: 13.52s, lr 0.005 cost 0.6972, update norm 0.0131 angle(RAD) 1.564
+        epoch 20: 13.61s, lr 0.005 cost 0.69497, update norm 0.0316 angle(RAD) 1.563
+part 2  epoch 21: 13.51s, lr 0.005 cost 0.698973, update norm 0.0202 angle(RAD) 1.572
+        epoch 22: 13.60s, lr 0.005 cost 0.697771, update norm 0.0238 angle(RAD) 1.566
+part 3  epoch 23: 13.50s, lr 0.005 cost 0.696865, update norm 0.0353 angle(RAD) 1.571
+        epoch 24: 13.60s, lr 0.005 cost 0.696748, update norm 0.0251 angle(RAD) 1.564
+part 4  epoch 25: 13.51s, lr 0.005 cost 0.697904, update norm 0.0181 angle(RAD) 1.559
+        epoch 26: 13.61s, lr 0.005 cost 0.708037, update norm 0.0352 angle(RAD) 1.593
+part 5  epoch 27: 13.52s, lr 0.005 cost 0.697396, update norm 0.0382 angle(RAD) 1.582
+        epoch 28: 13.61s, lr 0.005 cost 0.704164, update norm 0.0208 angle(RAD) 1.584
+part 6  epoch 29: 13.50s, lr 0.005 cost 0.701983, update norm 0.0302 angle(RAD) 1.587
+        epoch 30: 13.61s, lr 0.005 cost 0.696334, update norm 0.0118 angle(RAD) 1.554
+part 7  epoch 31: 13.52s, lr 0.005 cost 0.696264, update norm 0.0122 angle(RAD) 1.546
+        epoch 32: 13.61s, lr 0.005 cost 0.698177, update norm 0.00756 angle(RAD) 1.547
+*** epoch 1 cost: 0.620905
+*** error rate: train: 0.500000, test: 0.500000
+part 0  epoch 33: 13.50s, lr 0.005 cost 0.699361, update norm 0.0225 angle(RAD) 1.569
+        epoch 34: 13.60s, lr 0.005 cost 0.694621, update norm 0.00936 angle(RAD) 1.543
+part 1  epoch 35: 13.49s, lr 0.005 cost 0.695909, update norm 0.0102 angle(RAD) 1.539
+        epoch 36: 13.60s, lr 0.005 cost 0.695064, update norm 0.0132 angle(RAD) 1.556
+part 2  epoch 37: 13.51s, lr 0.005 cost 0.695132, update norm 0.0239 angle(RAD) 1.566
+        epoch 38: 13.60s, lr 0.005 cost 0.699011, update norm 0.0315 angle(RAD) 1.572
+part 3  epoch 39: 13.50s, lr 0.005 cost 0.695439, update norm 0.00908 angle(RAD) 1.547
+        epoch 40: 13.60s, lr 0.005 cost 0.69644, update norm 0.0162 angle(RAD) 1.563
+part 4  epoch 41: 13.51s, lr 0.005 cost 0.695881, update norm 0.00877 angle(RAD) 1.567
+        epoch 42: 13.60s, lr 0.005 cost 0.695998, update norm 0.0108 angle(RAD) 1.566
+part 5  epoch 43: 13.49s, lr 0.005 cost 0.697287, update norm 0.0167 angle(RAD) 1.564
+        epoch 44: 13.61s, lr 0.005 cost 0.698093, update norm 0.00955 angle(RAD) 1.570
+part 6  epoch 45: 13.51s, lr 0.005 cost 0.69777, update norm 0.0134 angle(RAD) 1.566
+        epoch 46: 13.60s, lr 0.005 cost 0.703926, update norm 0.0409 angle(RAD) 1.582
+part 7  epoch 47: 13.51s, lr 0.005 cost 0.694841, update norm 0.0287 angle(RAD) 1.571
+        epoch 48: 13.61s, lr 0.005 cost 0.697158, update norm 0.029 angle(RAD) 1.565
+*** epoch 2 cost: 0.619552
+*** error rate: train: 0.500000, test: 0.500000
+part 0  epoch 49: 13.51s, lr 0.005 cost 0.699154, update norm 0.0326 angle(RAD) 1.572
+        epoch 50: 13.61s, lr 0.005 cost 0.698335, update norm 0.0322 angle(RAD) 1.575
+part 1  epoch 51: 13.51s, lr 0.005 cost 0.698284, update norm 0.0298 angle(RAD) 1.568
+        epoch 52: 13.60s, lr 0.005 cost 0.696937, update norm 0.0138 angle(RAD) 1.568
+part 2  epoch 53: 13.52s, lr 0.005 cost 0.697785, update norm 0.0123 angle(RAD) 1.559
+        epoch 54: 13.61s, lr 0.005 cost 0.694648, update norm 0.0145 angle(RAD) 1.560
+part 3  epoch 55: 13.49s, lr 0.005 cost 0.69447, update norm 0.0255 angle(RAD) 1.557
+        epoch 56: 13.60s, lr 0.005 cost 0.698761, update norm 0.0372 angle(RAD) 1.570
+part 4  epoch 57: 13.52s, lr 0.005 cost 0.695311, update norm 0.0332 angle(RAD) 1.558
+        epoch 58: 13.60s, lr 0.005 cost 0.693566, update norm 0.0535 angle(RAD) 1.561
+part 5  epoch 59: 13.52s, lr 0.005 cost 0.699256, update norm 0.0796 angle(RAD) 1.567
+        epoch 60: 13.61s, lr 0.005 cost 0.683199, update norm 0.117 angle(RAD) 1.558
+part 6  epoch 61: 13.52s, lr 0.005 cost 0.667597, update norm 0.126 angle(RAD) 1.554
+        epoch 62: 13.61s, lr 0.005 cost 0.665616, update norm 0.107 angle(RAD) 1.566
+part 7  epoch 63: 13.52s, lr 0.005 cost 0.638589, update norm 0.118 angle(RAD) 1.551
+        epoch 64: 13.61s, lr 0.005 cost 0.632897, update norm 0.0722 angle(RAD) 1.564
+*** epoch 3 cost: 0.608578
+*** error rate: train: 0.366800, test: 0.372400
+
+
+Roll back, and tune up ReluConv2DLayer initial values:
+from:
+837         numparam_per_filter = numpy.prod(self.filter_shape[1:])
+838         w = numpy.asarray(self.npy_rng.uniform(
+839             low = - 0.1 * numpy.sqrt(3. / numparam_per_filter),
+840             high = 0.1 * numpy.sqrt(3. / numparam_per_filter),
+841             size=self.filter_shape), dtype=theano.config.floatX)
+to:
+837         numparam_per_filter = numpy.prod(self.filter_shape[1:])
+838         w = numpy.asarray(self.npy_rng.uniform(
+839             low = -numpy.sqrt(3. / numparam_per_filter),
+840             high = numpy.sqrt(3. / numparam_per_filter),
+841             size=self.filter_shape), dtype=theano.config.floatX)
+worse:
+[linzhou@bart15 ift6266h15]$ THEANO_FLAGS=device=gpu,floatX=float32 python expr_catsndogs_CONV.py
+Using gpu device 0: Quadro K6000
+ 
+batchsize = 100
+momentum = 0.9
+finetune:            lr = 0.005000, epc = 400
+... preparing data
+Done.
+... building model
+----------------------------------------
+a stacked model with 12 layers:
+----------------------------------------
+ReluConv2DLayer: (100, 3, 250, 250) --> (100, 32, 246, 246)
+                             |
+MaxPoolingLayer: (100, 32, 246, 246) --> (100, 32, 82, 82)
+                             |
+ReluConv2DLayer: (100, 32, 82, 82) --> (100, 48, 78, 78)
+                             |
+MaxPoolingLayer: (100, 48, 78, 78) --> (100, 48, 26, 26)
+                             |
+ReluConv2DLayer: (100, 48, 26, 26) --> (100, 64, 24, 24)
+                             |
+MaxPoolingLayer: (100, 64, 24, 24) --> (100, 64, 8, 8)
+                             |
+ReluConv2DLayer: (100, 64, 8, 8) --> (100, 128, 6, 6)
+                             |
+MaxPoolingLayer: (100, 128, 6, 6) --> (100, 128, 3, 3)
+                             |
+LinearLayer: 1152 --> 300
+                             |
+ReluLayer: 300 --> 1152
+                             |
+LinearLayer: 1152 --> 150
+                             |
+LogisticRegression: 150 --> 10
+-----------------------------------
+Done.
+Initial error rate: train: 0.507400, test: 0.506600
+
+
+... fine-tuning the whole network
+part 0  epoch 1: 13.39s, lr 0.005 cost 4.70653, update norm 17.5 angle(RAD) 1.602
+        epoch 2: 13.63s, lr 0.005 cost 0.711144, update norm 2.28 angle(RAD) 1.354
+part 1  epoch 3: 13.54s, lr 0.005 cost 0.706944, update norm 0.668 angle(RAD) 1.502
+        epoch 4: 13.62s, lr 0.005 cost 0.700284, update norm 0.102 angle(RAD) 1.534
+part 2  epoch 5: 13.59s, lr 0.005 cost 0.698346, update norm 0.0503 angle(RAD) 1.570
+        epoch 6: 13.62s, lr 0.005 cost 0.713609, update norm 0.133 angle(RAD) 1.583
+part 3  epoch 7: 13.57s, lr 0.005 cost 0.70373, update norm 0.0616 angle(RAD) 1.581
+        epoch 8: 13.61s, lr 0.005 cost 0.715568, update norm 0.0375 angle(RAD) 1.604
+part 4  epoch 9: 13.54s, lr 0.005 cost 0.721315, update norm 0.0535 angle(RAD) 1.604
+        epoch 10: 13.62s, lr 0.005 cost 0.701244, update norm 0.0401 angle(RAD) 1.594
+part 5  epoch 11: 13.54s, lr 0.005 cost 0.699426, update norm 0.0223 angle(RAD) 1.581
+        epoch 12: 13.62s, lr 0.005 cost 0.737362, update norm 0.0836 angle(RAD) 1.597
+part 6  epoch 13: 13.53s, lr 0.005 cost 0.744248, update norm 0.124 angle(RAD) 1.614
+        epoch 14: 13.61s, lr 0.005 cost 0.702997, update norm 0.0308 angle(RAD) 1.596
+part 7  epoch 15: 13.52s, lr 0.005 cost 0.704877, update norm 0.0225 angle(RAD) 1.590
+        epoch 16: 13.62s, lr 0.005 cost 0.701155, update norm 0.0319 angle(RAD) 1.574
+*** epoch 0 cost: 0.853821
+*** error rate: train: 0.500000, test: 0.500000
+part 0  epoch 17: 13.55s, lr 0.005 cost 0.708152, update norm 0.0374 angle(RAD) 1.587
+        epoch 18: 13.62s, lr 0.005 cost 0.69831, update norm 0.0171 angle(RAD) 1.581
+part 1  epoch 19: 13.49s, lr 0.005 cost 0.695639, update norm 0.0205 angle(RAD) 1.562
+        epoch 20: 13.61s, lr 0.005 cost 0.694914, update norm 0.0302 angle(RAD) 1.561
+part 2  epoch 21: 13.47s, lr 0.005 cost 0.699423, update norm 0.0117 angle(RAD) 1.575
+        epoch 22: 13.63s, lr 0.005 cost 0.697885, update norm 0.0124 angle(RAD) 1.574
+part 3  epoch 23: 13.44s, lr 0.005 cost 0.700588, update norm 0.0114 angle(RAD) 1.595
+        epoch 24: 13.62s, lr 0.005 cost 0.703425, update norm 0.012 angle(RAD) 1.602
+part 4  epoch 25: 13.38s, lr 0.005 cost 0.701916, update norm 0.0112 angle(RAD) 1.603
+        epoch 26: 13.55s, lr 0.005 cost 0.706827, update norm 0.0244 angle(RAD) 1.615
+part 5  epoch 27: 13.47s, lr 0.005 cost 0.704429, update norm 0.0201 angle(RAD) 1.609
+        epoch 28: 13.62s, lr 0.005 cost 0.706727, update norm 0.0288 angle(RAD) 1.600
+part 6  epoch 29: 13.39s, lr 0.005 cost 0.700799, update norm 0.0201 angle(RAD) 1.589
+        epoch 30: 13.62s, lr 0.005 cost 0.698747, update norm 0.0115 angle(RAD) 1.575
+part 7  epoch 31: 13.42s, lr 0.005 cost 0.704595, update norm 0.0157 angle(RAD) 1.606
+        epoch 32: 13.62s, lr 0.005 cost 0.702868, update norm 0.0169 angle(RAD) 1.599
+*** epoch 1 cost: 0.623625
+*** error rate: train: 0.500000, test: 0.500000
+part 0  epoch 33: 13.54s, lr 0.005 cost 0.699357, update norm 0.00975 angle(RAD) 1.592
+        epoch 34: 13.62s, lr 0.005 cost 0.695504, update norm 0.0128 angle(RAD) 1.566
+part 1  epoch 35: 13.48s, lr 0.005 cost 0.697409, update norm 0.0131 angle(RAD) 1.564
+        epoch 36: 13.62s, lr 0.005 cost 0.696512, update norm 0.023 angle(RAD) 1.574
+part 2  epoch 37: 13.46s, lr 0.005 cost 0.698664, update norm 0.0258 angle(RAD) 1.583
+        epoch 38: 13.63s, lr 0.005 cost 0.699541, update norm 0.0115 angle(RAD) 1.586
+part 3  epoch 39: 13.46s, lr 0.005 cost 0.696688, update norm 0.0184 angle(RAD) 1.570
+        epoch 40: 13.63s, lr 0.005 cost 0.697685, update norm 0.0119 angle(RAD) 1.582
+part 4  epoch 41: 13.41s, lr 0.005 cost 0.698396, update norm 0.00964 angle(RAD) 1.596
+        epoch 42: 13.63s, lr 0.005 cost 0.698851, update norm 0.0226 angle(RAD) 1.586
+part 5  epoch 43: 13.41s, lr 0.005 cost 0.703056, update norm 0.0309 angle(RAD) 1.583
+        epoch 44: 13.62s, lr 0.005 cost 0.70775, update norm 0.0195 angle(RAD) 1.617
+part 6  epoch 45: 13.45s, lr 0.005 cost 0.704027, update norm 0.0258 angle(RAD) 1.598
+        epoch 46: 13.62s, lr 0.005 cost 0.697908, update norm 0.0118 angle(RAD) 1.609
+part 7  epoch 47: 13.45s, lr 0.005 cost 0.696691, update norm 0.00756 angle(RAD) 1.577
+        epoch 48: 13.62s, lr 0.005 cost 0.699359, update norm 0.0212 angle(RAD) 1.575
+*** epoch 2 cost: 0.621522
+*** error rate: train: 0.500000, test: 0.500000
+
+
+Roll back again.
